@@ -1,4 +1,4 @@
-package com.hschoi.todo.common
+package com.hschoi.todo.common.exception
 
 import com.hschoi.todo.common.code.Errors
 
