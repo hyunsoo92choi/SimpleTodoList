@@ -1,0 +1,23 @@
+spring:
+  profiles:
+    active: local
+  mvc:
+    throw-exception-if-no-handler-found: true
+    static-path-pattern: /static
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  datasource:
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop # 시작 시 @Table 클래스대로 DB에 만들어버림. none으로 하면 안 만듬
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      use-new-id-generator-mappings: false
+    properties:
+      hibernate.format_sql: true # 로그에 SQL 이쁘게 나오도록 하기
+      use_sql_comments: true
