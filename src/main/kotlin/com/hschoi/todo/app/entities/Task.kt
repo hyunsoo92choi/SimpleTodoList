@@ -3,10 +3,7 @@ package com.hschoi.todo.app.entities
 import com.hschoi.todo.common.code.TaskStatus
 import com.hschoi.todo.common.entities.BaseEntity
 import java.time.LocalDateTime
-import javax.persistence.Entity
-import javax.persistence.EnumType
-import javax.persistence.Enumerated
-import javax.persistence.Table
+import javax.persistence.*
 
 /**
  * Created by hschoi.

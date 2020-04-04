@@ -1,6 +1,7 @@
 package com.hschoi.todo.app.controllers
 
 import com.hschoi.todo.app.dto.request.TaskRequestDto
+import com.hschoi.todo.app.dto.response.TaskResponse
 import com.hschoi.todo.app.services.TaskService
 import com.hschoi.todo.common.response.ResultBody
 import com.hschoi.todo.common.response.ResultGenerator
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import java.lang.String
+import java.net.URI
 
 
 /**
@@ -26,9 +29,12 @@ class TaskController(private val taskService: TaskService) {
     }
 
     @PostMapping()
-    fun registerTask(@RequestBody dto: TaskRequestDto): ResponseEntity<ResultBody> {
+    fun registerTask(@RequestBody taskRequest: TaskRequestDto): ResponseEntity<ResultBody> {
+        val createdTask = taskService.registerTask(taskRequest)
+        val url: URI = URI.create(String.format("/api/tasks/%d", createdTask.id))
+        log.info("created task url : {}", url)
         return ResponseEntity
             .status(HttpStatus.CREATED)
-            .body(ResultGenerator.genSuccessResult())
+            .body(ResultGenerator.genSuccessResult(TaskResponse.of(createdTask)))
     }
 }
