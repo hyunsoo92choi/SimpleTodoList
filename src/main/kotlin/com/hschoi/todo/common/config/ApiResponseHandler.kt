@@ -1,6 +1,6 @@
 package com.hschoi.todo.common.config
 
-import com.hschoi.todo.common.BizException
+import com.hschoi.todo.common.exception.BizException
 import com.hschoi.todo.common.response.ApiErrorResponseDto
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ExceptionHandler
