@@ -6,6 +6,7 @@ plugins {
     kotlin("jvm") version "1.3.71"
     kotlin("plugin.spring") version "1.3.71"
     kotlin("plugin.jpa") version "1.3.71"
+    kotlin("kapt") version "1.3.71"
 }
 
 group = "com.hschoi"
@@ -22,8 +23,17 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    compile("com.h2database:h2")
-    compile(group = "org.modelmapper", name="modelmapper", version="2.3.6")
+    implementation("org.springframework.boot:spring-boot-starter-security")
+
+    implementation("com.querydsl:querydsl-jpa:4.2.2")
+    kapt("com.querydsl:querydsl-apt:4.2.2:jpa")
+
+    implementation("com.h2database:h2")
+    implementation(group = "org.modelmapper", name="modelmapper", version="2.3.6")
+
+    implementation("io.springfox:springfox-swagger2:2.9.2")
+    implementation("io.springfox:springfox-swagger-ui:2.9.2")
+
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }
