@@ -25,9 +25,6 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.springframework.boot:spring-boot-starter-security")
 
-    implementation("com.querydsl:querydsl-jpa:4.2.2")
-    kapt("com.querydsl:querydsl-apt:4.2.2:jpa")
-
     implementation("com.h2database:h2")
     implementation(group = "org.modelmapper", name="modelmapper", version="2.3.6")
 
