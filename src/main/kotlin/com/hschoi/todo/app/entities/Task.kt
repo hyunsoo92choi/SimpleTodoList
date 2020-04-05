@@ -1,9 +1,12 @@
 package com.hschoi.todo.app.entities
 
+import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonManagedReference
 import com.hschoi.todo.common.code.TaskStatus
 import com.hschoi.todo.common.entities.BaseEntity
 import java.time.LocalDateTime
 import javax.persistence.*
+
 
 /**
  * Created by hschoi.
@@ -13,6 +16,7 @@ import javax.persistence.*
 @Entity
 @Table(name = "tasks")
 class Task(
+    @Column(name = "task_id")
     override var id: Long? = null,
     //제목
     var title: String,
@@ -22,6 +26,18 @@ class Task(
     @Enumerated(EnumType.STRING)
     var taskStatus: TaskStatus = TaskStatus.TODO,
     // 완료일자
-    var complatedAt: LocalDateTime? = null
+    var complatedAt: LocalDateTime? = null,
 
-) : BaseEntity()
+    @JsonManagedReference
+    @OneToMany(mappedBy = "taskJoinInfo", fetch = FetchType.EAGER, cascade = arrayOf(CascadeType.ALL))
+    @OrderBy("sub_task_id DESC")
+    var subTask: List<SubTask>? = null
+
+): BaseEntity() {
+    fun wasCompleted(): Boolean {
+        return complatedAt != null
+    }
+
+
+}
+

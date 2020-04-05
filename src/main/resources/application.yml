@@ -13,11 +13,23 @@ spring:
     username: sa
     password:
   jpa:
-    hibernate:
-      ddl-auto: create-drop # 시작 시 @Table 클래스대로 DB에 만들어버림. none으로 하면 안 만듬
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-      use-new-id-generator-mappings: false
     properties:
-      hibernate.format_sql: true # 로그에 SQL 이쁘게 나오도록 하기
-      use_sql_comments: true
+      hibernate:
+        ddl-auto: create-drop # 시작 시 @Table 클래스대로 DB에 만들어버림. none으로 하면 안 만듬
+        show_sql: true
+        format_sql: true
+        use_sql_comments: true
+
+logging:
+  level:
+    org:
+      hibernate:
+        type:
+          descriptor:
+            sql: trace
+
+index:
+  page: "/api/swagger-ui.html"
+
+swagger:
+  base-path: "/"
