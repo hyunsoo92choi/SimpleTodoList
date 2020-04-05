@@ -2,6 +2,8 @@ package com.hschoi.todo.app.dto.request
 
 import com.hschoi.todo.common.code.TaskStatus
 import java.time.LocalDateTime
+import java.util.*
+
 
 /**
  * Created by hschoi.
@@ -9,6 +11,7 @@ import java.time.LocalDateTime
  * Date: 2020/04/04
  */
 data class TaskRequestDto(
-    val taskNo: Int, val title: String, val description: String?,
+    val subTaskNo: LongArray,
+    val title: String, val description: String?,
     val taskStatus: TaskStatus? = TaskStatus.TODO, val complatedAt: LocalDateTime?
 )
