@@ -5,7 +5,10 @@ import com.hschoi.todo.app.entities.SubTask
 import com.hschoi.todo.app.entities.Task
 import com.hschoi.todo.app.repository.SubTaskRepository
 import com.hschoi.todo.app.repository.TaskRepository
+import com.hschoi.todo.common.utils.PageRequest
 import org.modelmapper.ModelMapper
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.*
@@ -49,5 +52,8 @@ class TaskService(
             subTaskRepository.saveAll(subTasks)
         }
     }
+
+    fun findAll(page: Int, size: Int): Page<Task> =
+        taskRepository.findAll( PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "id")) )
 
 }
