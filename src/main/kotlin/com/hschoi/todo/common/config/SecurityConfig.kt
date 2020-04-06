@@ -6,7 +6,8 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.config.http.SessionCreationPolicy
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
+
 
 /**
  * Created by hschoi.
@@ -37,4 +38,5 @@ class SecurityConfig() : WebSecurityConfigurerAdapter() {
                 "/webjars/**"
             )
     }
+
 }
