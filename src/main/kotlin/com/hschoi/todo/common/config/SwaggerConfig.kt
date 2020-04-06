@@ -28,7 +28,7 @@ class SwaggerConfig(@Value("\${swagger.base-path}") val pathProvider: String?) {
     @Bean
     fun swaggerApi(): Docket {
         return Docket(DocumentationType.SWAGGER_2).apiInfo(swaggerInfo()).select()
-            .apis(RequestHandlerSelectors.basePackage("com.hschoi.todo.app.controllers"))
+            .apis(RequestHandlerSelectors.basePackage("com.hschoi.todo"))
             .paths(PathSelectors.any())
             .build().pathProvider(object : RelativePathProvider(null) {
                 override fun getApplicationBasePath(): String {
