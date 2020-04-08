@@ -1,5 +1,6 @@
 package com.hschoi.todo.app.dto.response
 
+import com.hschoi.todo.app.entities.SubTask
 import com.hschoi.todo.app.entities.Task
 import com.hschoi.todo.common.code.TaskStatus
 import java.time.LocalDateTime
@@ -11,7 +12,8 @@ import java.time.LocalDateTime
  */
 data class TaskResponse(
     val title: String, val description: String?,
-    val taskStatus: TaskStatus?, val complatedAt: LocalDateTime?
+    val taskStatus: TaskStatus?, val complatedAt: LocalDateTime?,
+    val subTask: List<SubTask>?
 ) {
     companion object {
         fun of(task: Task): TaskResponse {
@@ -19,7 +21,8 @@ data class TaskResponse(
                 title = task.title,
                 description = task.description,
                 taskStatus = task.taskStatus,
-                complatedAt = task.complatedAt
+                complatedAt = task.complatedAt,
+                subTask = task.subTask
             )
         }
     }

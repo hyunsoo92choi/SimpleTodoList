@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface TaskRepository: JpaRepository<Task, Long> {
+    fun findAllByIdIn(ids: List<Long>): List<Task>
 }

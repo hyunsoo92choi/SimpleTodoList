@@ -16,8 +16,10 @@ import javax.persistence.*
 @Entity
 @Table(name = "tasks")
 class Task(
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "task_id")
-    override var id: Long? = null,
+    var id: Long? = null,
     //제목
     var title: String,
     // 내용
