@@ -13,8 +13,10 @@ import javax.persistence.*
 @Entity
 @Table(name = "sub_tasks")
 class SubTask(
-    @Column(name = "ref_id")
-    override var id: Long? = null,
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "sub_id")
+    var id: Long? = null,
     /**
      * 상위 할일 번호
      */
@@ -33,7 +35,7 @@ class SubTask(
     var taskJoinInfo: Task? = null,
 
     @OneToOne
-    @JoinColumn(name = "ref_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "sub_id", referencedColumnName = "id", insertable = false, updatable = false)
     @JsonIgnoreProperties("sub_tasks")
     var subTaskInfo: Task? = null
 

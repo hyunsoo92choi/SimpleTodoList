@@ -1,5 +1,6 @@
 package com.hschoi.todo.common.entities
 
+import com.fasterxml.jackson.annotation.JsonFormat
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
 import java.time.LocalDateTime
@@ -15,13 +16,11 @@ import javax.persistence.MappedSuperclass
  */
 @MappedSuperclass
 abstract class BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    open var id: Long? = null
-
     @CreationTimestamp
+    @JsonFormat(pattern = "yyyy-MM-dd")
     val createdAt: LocalDateTime = LocalDateTime.now()
 
     @UpdateTimestamp
+    @JsonFormat(pattern = "yyyy-MM-dd")
     var updatedAt: LocalDateTime = LocalDateTime.now()
 }

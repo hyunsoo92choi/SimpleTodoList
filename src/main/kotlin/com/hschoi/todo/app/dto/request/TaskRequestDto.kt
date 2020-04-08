@@ -11,7 +11,7 @@ import java.util.*
  * Date: 2020/04/04
  */
 data class TaskRequestDto(
-    val subTaskNo: LongArray,
-    val title: String, val description: String?,
+    val subTaskNo: LongArray?,
+    val title: String?, val description: String?,
     val taskStatus: TaskStatus? = TaskStatus.TODO, val complatedAt: LocalDateTime?
 )
