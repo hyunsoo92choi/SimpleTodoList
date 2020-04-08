@@ -7,6 +7,9 @@ import java.util.*
 
 @Repository
 interface SubTaskRepository: JpaRepository<SubTask, Long> {
-    fun findByParentTaskId(todoId: Long?): MutableList<SubTask>//mutableList<SubTask>
+    fun findByParentTaskId(todoId: Long?): List<SubTask>
+    fun findAllByIdIn(ids: List<Long>): List<SubTask>
+
+    @Deprecated("Not Used anymore")
     fun findBySubTaskId(subTaskId: Long):List<SubTask>
 }

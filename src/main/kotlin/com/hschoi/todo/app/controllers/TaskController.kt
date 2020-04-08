@@ -86,4 +86,24 @@ class TaskController(private val taskService: TaskService) {
             .status(HttpStatus.OK)
             .body(ResultGenerator.genSuccessResult(TaskResponse.of(updatedTask)))
     }
+
+    @ApiOperation("삭제")
+    @DeleteMapping("{id}")
+    fun delete(@PathVariable id: Long): ResponseEntity<ResultBody> {
+        // 하위 Task의 ID를 조회 함.
+        var subTasks = taskService.getSubTasks(id)
+
+        // 단일 할일은 그냥 삭제
+        if (subTasks.isNullOrEmpty()) {
+            taskService.remove(taskService.findById(id))
+        } else {
+            // 먼저 하위의 모든 일들을 삭제 후 자신의 할일 삭제.
+            taskService.removeAllSubTask(subTasks)
+            taskService.remove(taskService.findById(id))
+        }
+
+        return ResponseEntity
+            .status(HttpStatus.NO_CONTENT)
+            .body(ResultGenerator.genSuccessResult())
+    }
 }

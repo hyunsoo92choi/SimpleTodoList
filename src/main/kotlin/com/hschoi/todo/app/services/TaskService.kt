@@ -33,6 +33,7 @@ class TaskService(
     companion object {
         private val log = LogManager.getLogger()
     }
+    // 등록 관
     @Transactional
     fun registerTask(taskRequest: TaskRequestDto): Task {
         verifyNewTask(taskRequest)
@@ -43,7 +44,6 @@ class TaskService(
 
         return newTask
     }
-    // 1번이 3번을 하위로 갖음, 3번이 다시 1번을 하위로 갖음.
 
     private fun addSubTasks(taskId: Long, subTaskIds: LongArray?) {
         // 하위 할일이 있을 경우
@@ -61,13 +61,24 @@ class TaskService(
             subTaskRepository.saveAll(subTasks)
         }
     }
+    // 수정관련
+    fun update(task: Task): Task = taskRepository.save(task)
+    // 삭제 관련
+    fun remove(task: Task) = taskRepository.delete(task)
 
+    fun removeAllSubTask(ids: List<Long>) {
+        var subTasks = subTaskRepository.findAllByIdIn(ids)
+
+        subTaskRepository.deleteAll(subTasks)
+    }
+    // 조회 관련
     fun findAll(page: Int, size: Int): Page<Task> =
         taskRepository.findAll( PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "id")) )
 
     fun findById(id: Long): Task =
         taskRepository.findById(id).orElseThrow { BizException(Errors.NOT_FOUND, "존재하지 않는 할일 입니다.") }
 
+    //하위 할일 상태 체크 (하위 할일이 모두 완료이면 true 반환)
     fun checkSubTaskStatus (id: Long): Boolean {
         var isAllSubTaskDone = false
         var foundParentsTask = subTaskRepository.findByParentTaskId(id)
@@ -88,9 +99,13 @@ class TaskService(
 
         return isAllSubTaskDone;
     }
+    // 하위 할일들 조회하여 하위 할일 아이디 반환
+    fun getSubTasks(id: Long): List<Long> {
+        var foundParentsTask = subTaskRepository.findByParentTaskId(id)
 
-    fun update(task: Task): Task = taskRepository.save(task)
-
+        return foundParentsTask.map { t-> t.subTaskId }
+    }
+    // 등록 시 체커
     private fun verifyNewTask(taskRequest: TaskRequestDto) {
         var parentTaskIds = subTaskRepository.findAll().map { it.parentTaskId }
 
