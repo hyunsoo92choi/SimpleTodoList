@@ -35,7 +35,7 @@ class TaskService(
     }
     @Transactional
     fun registerTask(taskRequest: TaskRequestDto): Task {
-        verifyNewTask(taskRequest)
+//        verifyNewTask(taskRequest)
         // 새로운 할 일을 등록
         val newTask = taskRepository.save(this.modelMapper.map(taskRequest, Task::class.java))
         // 생성한 신규 할일을 가지고 하위 할일 등록.

@@ -31,7 +31,7 @@ class Task(
     var complatedAt: LocalDateTime? = null,
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "taskJoinInfo", fetch = FetchType.EAGER, cascade = arrayOf(CascadeType.ALL))
+    @OneToMany(mappedBy = "taskJoinInfo", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
     @OrderBy("sub_task_id DESC")
     var subTask: List<SubTask>? = null
 
