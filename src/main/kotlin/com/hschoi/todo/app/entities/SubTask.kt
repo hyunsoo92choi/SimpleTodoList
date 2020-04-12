@@ -32,12 +32,7 @@ class SubTask(
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "parent_task_id", insertable = false, updatable = false)
-    var taskJoinInfo: Task? = null,
-
-    @OneToOne
-    @JoinColumn(name = "sub_id", referencedColumnName = "id", insertable = false, updatable = false)
-    @JsonIgnoreProperties("sub_tasks")
-    var subTaskInfo: Task? = null
+    var taskJoinInfo: Task? = null
 
 
 ): BaseEntity() {
