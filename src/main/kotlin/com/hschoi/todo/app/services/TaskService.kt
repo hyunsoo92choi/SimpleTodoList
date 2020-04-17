@@ -15,7 +15,6 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import org.springframework.util.StringUtils
 import java.util.*
 
 
@@ -90,6 +89,8 @@ class TaskService(
     }
 
     fun update(task: Task): Task = taskRepository.save(task)
+
+    fun remove(id: Long) = taskRepository.deleteById(id)
 
     private fun verifyNewTask(taskRequest: TaskRequestDto) {
         var parentTaskIds = subTaskRepository.findAll().map { it.parentTaskId }
