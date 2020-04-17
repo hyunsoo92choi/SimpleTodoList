@@ -33,3 +33,6 @@ index:
 
 swagger:
   base-path: "/"
+
+slack:
+  web-hook-url: https://hooks.slack.com/services/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

@@ -2,12 +2,13 @@ package com.hschoi.todo.app.controllers
 
 import com.hschoi.todo.app.dto.request.TaskRequestDto
 import com.hschoi.todo.app.dto.response.TaskResponse
+import com.hschoi.todo.app.services.SlackService
 import com.hschoi.todo.app.services.TaskService
-import com.hschoi.todo.common.code.Errors
+import com.hschoi.todo.common.code.Status
 import com.hschoi.todo.common.code.TaskStatus
-import com.hschoi.todo.common.exception.BizException
 import com.hschoi.todo.common.response.ResultBody
 import com.hschoi.todo.common.response.ResultGenerator
+import com.hschoi.todo.common.utils.SlackMessage
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import org.apache.logging.log4j.LogManager
@@ -27,8 +28,11 @@ import javax.validation.constraints.Max
  */
 @Api(tags = ["할일"])
 @RestController
-@RequestMapping( "/api/{version}/tasks")
-class TaskController(private val taskService: TaskService) {
+@RequestMapping("/api/{version}/tasks")
+class TaskController(
+    private val taskService: TaskService,
+    private val slackService: SlackService
+) {
     companion object {
         private val log = LogManager.getLogger()
     }
@@ -51,6 +55,9 @@ class TaskController(private val taskService: TaskService) {
         val createdTask = taskService.registerTask(taskRequest)
         val url: URI = URI.create(String.format("/api/tasks/%d", createdTask.id))
         log.info("created task url : {}", url)
+
+        sendSlack(TaskResponse.of(createdTask), taskRequest)
+
         return ResponseEntity
             .status(HttpStatus.CREATED)
             .body(ResultGenerator.genSuccessResult(TaskResponse.of(createdTask)))
@@ -82,8 +89,23 @@ class TaskController(private val taskService: TaskService) {
 
         val updatedTask = taskService.update(foundTask)
 
+        sendSlack(TaskResponse.of(updatedTask), taskRequest)
+
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(ResultGenerator.genSuccessResult(TaskResponse.of(updatedTask)))
+    }
+
+    private fun sendSlack(taskResponse: TaskResponse, taskRequest: TaskRequestDto) {
+        slackService.send(
+            SlackMessage(title = "Task API 호출",
+                path = this,
+                status = Status.SUCCESS,
+                message = null,
+                params = "${taskRequest.subTaskNo},${taskRequest.title}," +
+                         "${taskRequest.description},${taskRequest.taskStatus},${taskRequest.complatedAt}"
+            )
+        )
+
     }
 }

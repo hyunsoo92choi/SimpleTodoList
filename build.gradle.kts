@@ -31,6 +31,9 @@ dependencies {
     implementation("io.springfox:springfox-swagger2:2.9.2")
     implementation("io.springfox:springfox-swagger-ui:2.9.2")
 
+    implementation(group = "io.github.rybalkinsd", name = "kohttp", version = "0.11.1")
+    implementation(group = "com.google.code.gson", name = "gson", version = "2.7")
+
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }
