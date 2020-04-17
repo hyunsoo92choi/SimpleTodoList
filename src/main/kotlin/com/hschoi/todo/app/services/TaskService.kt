@@ -90,6 +90,8 @@ class TaskService(
 
     fun update(task: Task): Task = taskRepository.save(task)
 
+    fun remove(id: Long) = taskRepository.deleteById(id)
+
     private fun verifyNewTask(taskRequest: TaskRequestDto) {
         var parentTaskIds = subTaskRepository.findAll().map { it.parentTaskId }
 

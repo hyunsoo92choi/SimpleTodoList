@@ -95,6 +95,10 @@ class TaskController(
             .status(HttpStatus.OK)
             .body(ResultGenerator.genSuccessResult(TaskResponse.of(updatedTask)))
     }
+    @ApiOperation("삭제")
+    @DeleteMapping("{id}")
+    fun delete(@PathVariable id: Long) = taskService.remove(id)
+
 
     private fun sendSlack(taskResponse: TaskResponse, taskRequest: TaskRequestDto) {
         slackService.send(
